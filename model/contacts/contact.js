@@ -17,6 +17,22 @@ const contactSchema = Schema({
     type: String,
     required: true,
   },
+  city:{
+    type: String,
+    required: true,
+  },
+  church:{
+    type: String,
+    required: true,
+  },
+  inst:{
+    type: String,
+  },
+  arrivalDay:{
+    type: String,
+    required: true,
+  },
+  eatingDays:[String]
 });
 const validateSchema = Joi.object({
   name: Joi.string().min(3).max(30).required(),
@@ -28,6 +44,11 @@ const validateSchema = Joi.object({
     }),
   phone: Joi.string().required(),
   dob: Joi.string().required(),
+  city: Joi.string().required(),
+  church: Joi.string().required(),
+  inst: Joi.string().optional(),
+  arrivalDay: Joi.string().required(),
+  eatingDays: Joi.array()
 });
 const Contact = model("contact", contactSchema);
 module.exports = { Contact, validateSchema };

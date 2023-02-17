@@ -5,7 +5,6 @@ const multer = require("multer");
 const path = require("path");
 require("dotenv").config();
 const contactsRouter = require("./routes/api/contacts");
-const usersRouter = require("./routes/api/users");
 
 const app = express();
 
@@ -30,7 +29,6 @@ const upload = multer({
   storage: multerConfig,
 });
 app.use("/api/contacts", contactsRouter);
-app.use("/api/users", usersRouter);
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
 });

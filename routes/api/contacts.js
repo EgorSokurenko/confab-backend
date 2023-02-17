@@ -3,7 +3,7 @@ const {
   validateSchema,
 } = require("../../model/contacts/contact");
 const contacts = require("../../controllers/contacts");
-const { validation, ctrlWrapper, token } = require("../../middlewares");
+const { validation, ctrlWrapper } = require("../../middlewares");
 const router = express.Router();
 
 router.get("/", ctrlWrapper(contacts.getAll));
