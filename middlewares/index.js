@@ -1,8 +1,8 @@
 const validation = require("./validation");
 const ctrlWrapper = require("./ctrlWrapper");
-const upload = require("./upload");
+const token = require("./token");
 module.exports = {
   validation,
   ctrlWrapper,
-  upload,
+  token,
 };
