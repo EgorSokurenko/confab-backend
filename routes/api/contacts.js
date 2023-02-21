@@ -9,7 +9,8 @@ const router = express.Router();
 router.get("/", ctrlWrapper(contacts.getAll));
 
 router.get("/:contactId", ctrlWrapper(contacts.getById));
-router.get("/:contactId/admin", token,  ctrlWrapper(contacts.getById));
+
+router.get("/:contactId/admin", token,  ctrlWrapper(contacts.getAdminUsers));
 
 router.post("/", validation(validateSchema), ctrlWrapper(contacts.add));
 
