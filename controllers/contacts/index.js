@@ -5,4 +5,5 @@ const { deleteById } = require("./deleteById");
 const { putById } = require("./putById");
 const { patchFavorite } = require("./patchFavorite");
 const { getAdminUsers } = require("./getAdminUsers")
-module.exports = { getAll, getById, add, deleteById, putById, patchFavorite, getAdminUsers };
+const { pdf } = require("./pdf")
+module.exports = { getAll, getById, add, deleteById, putById, patchFavorite, getAdminUsers, pdf};

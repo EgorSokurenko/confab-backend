@@ -16,6 +16,8 @@ router.post("/", validation(validateSchema), ctrlWrapper(contacts.add));
 
 router.delete("/:contactId", ctrlWrapper(contacts.deleteById));
 
+router.get("/:contactId/pdf", ctrlWrapper(contacts.pdf))
+
 router.put(
   "/:contactId",
   validation(validateSchema),
