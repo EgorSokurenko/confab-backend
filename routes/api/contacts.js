@@ -12,7 +12,7 @@ router.get("/:contactId", ctrlWrapper(contacts.getById));
 
 router.get("/:contactId/admin", token,  ctrlWrapper(contacts.getAdminUsers));
 
-router.post("/", validation(validateSchema), ctrlWrapper(contacts.add));
+router.post("/",  ctrlWrapper(contacts.add));
 
 router.delete("/:contactId", ctrlWrapper(contacts.deleteById));
 

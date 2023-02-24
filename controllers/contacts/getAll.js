@@ -4,8 +4,8 @@ const getAll = async (req, res, next) => {
   const skip = (page - 1) * limit;
   const result = await Contact.find({}, "", {
     skip,
-    limit: +limit,
-  });
+    limit: 25,
+  }).sort({createdAt:-1});
   res.status(200).json({
     status: "succsess",
     code: 200,
