@@ -28,22 +28,24 @@ const pdf = async (req, res, next) => {
     //     if (err) throw err
     //     contact.qrCode = string 
     // })
-    var opts = {
-        errorCorrectionLevel: 'H',
-        type: 'image/jpeg',
-        quality: 0.9,
-        margin: 1,
-        color: {
-          dark:"#000",
-          light:"#FFF"
-        }
-      }
+    // var opts = {
+    //     errorCorrectionLevel: 'H',
+    //     type: 'image/jpeg',
+    //     quality: 0.9,
+    //     margin: 1,
+    //     color: {
+    //       dark:"#000",
+    //       light:"#FFF"
+    //     }
+    //   }
       
-      await QRCode.toDataURL(`https://confab-profound.web.app/user/${contact._id}/admin`, opts, async function (err, url) {
-        if (err) throw err
+    //   await QRCode.toDataURL(`https://confab-profound.web.app/user/${contact._id}/admin`, opts, async function (err, url) {
+    //     if (err) throw err
       
-        contact.qrCode = url
-        contact.day = contact.arrivalDay === "Четверг" ? '06.04' : contact.arrivalDay === "Пʼятниця" ? '07.04'  : contact.arrivalDay === "Субота" ? '07.04' : ''
+    //     contact.qrCode = url
+        
+    // })
+    contact.day = contact.arrivalDay === "Четверг" ? '06.04' : contact.arrivalDay === "Пʼятниця" ? '07.04'  : contact.arrivalDay === "Субота" ? '07.04' : ''
         contact.time = contact.arrivalDay === "Четверг" ? '15:00' : contact.arrivalDay === "Пʼятниця" ? '09:00'  : contact.arrivalDay === "Субота" ? '09:30' : ''
         contact.eatingDays = contact.eatingDays.length===2 ? 'Пт/Сб' : contact.eatingDays.length===1 ? contact.eatingDays[0]  : 'Голодний'
         const html = compileTemplate(template, { user: contact })
@@ -53,8 +55,6 @@ const pdf = async (req, res, next) => {
         res.setHeader('Content-Type', 'application/pdf');
         res.write(resp, 'binary');
         res.end();
-    })
-
 
 };
 module.exports = { pdf };
