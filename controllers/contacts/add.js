@@ -1,45 +1,40 @@
 const { Contact } = require("../../model/contacts/contact");
 const nodemailer = require('nodemailer');
-const template = (user)=>{
- return ` 
+const Path = require('path')
+const fs = require('fs')
+const getTemplate = template => fs.readFileSync(Path.resolve(__dirname, '../../templates/' + template), 'utf8')
+const compileTemplate = function (templateData, variablesData) {
+    const Handlebars = require('handlebars')
+    return Handlebars.compile(templateData)(variablesData)
+  }
 
-Вставка нашого банера конфи 
-
-Як варіант на банері чи під низом створити відлік до події ( якщо це можливо )
-
-Привіт ${user.name} 
-Дякуємо, що обрав ( 6-8 квітня )бути на конференції PROFOUND Conf. і разом з нами поринути в атмосферу Його повної присутності та пірнути в глибини відносин з Ним.
-Ми надзвичайно схвильовані тим, що Бог приготував для нас на конференції всього за кілька днів. Ми будемо разом поклонятися нашому Богові, наповнюватись Його Словом, відновлювати живі відносини з Ним, заводити нові знайомства і якісно проводити час в оточенні молоді з усієї України . 
-Віримо, що Бог діє в період війни та хоче відновити глибину відносин з тобою . 
-Який привілей бути живим у такий непростий час і мати правильне наповнення свого серця !
-
-Тож з нетерпінням чекаємо тебе на конференції !
-
-Детальна інформація на сайті конференції https://confab-profound.web.app/user/${user._id} `
-}
 const add = async (req, res, next) => {
   const newContact = await Contact.create(req.body);
+  const contact = await Contact.findOne({_id: newContact._id}).lean()
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'sokurenko337@gmail.com',
-      pass: 'tlmcehcnppkmssrp'
+      user: 'profoundconf@gmail.com',
+      pass: 'vfvneakvapkavhza'
     }
   });
+
+  const fonts = getTemplate('fonts.css')
+  const styles = getTemplate('style.css')
+  const layout = getTemplate('layout.html')
+  const body = getTemplate('email.html')
+  const template = compileTemplate(layout, {
+    content: body,
+    styles,
+    fonts
+})
+  const html = compileTemplate(template, { user: contact })
+
   var mailOptions = {
     from: 'sokurenko337@gmail.com',
     to: newContact.email,
-    subject: 'Profound 04/06/23',
-    text: ` 
-    Привіт ${newContact.name} 
-    Дякуємо, що обрав ( 6-8 квітня )бути на конференції PROFOUND Conf. і разом з нами поринути в атмосферу Його повної присутності та пірнути в глибини відносин з Ним.
-    Ми надзвичайно схвильовані тим, що Бог приготував для нас на конференції всього за кілька днів. Ми будемо разом поклонятися нашому Богові, наповнюватись Його Словом, відновлювати живі відносини з Ним, заводити нові знайомства і якісно проводити час в оточенні молоді з усієї України . 
-    Віримо, що Бог діє в період війни та хоче відновити глибину відносин з тобою . 
-    Який привілей бути живим у такий непростий час і мати правильне наповнення свого серця !
-    
-    Тож з нетерпінням чекаємо тебе на конференції !
-    
-    Детальна інформація на сайті конференції https://confab-profound.web.app/user/${newContact._id} `,
+    subject: 'Profound',
+    html: html
   };
   transporter.sendMail(mailOptions, function(error, info){
     if (error) {
