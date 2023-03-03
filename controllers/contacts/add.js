@@ -31,7 +31,7 @@ const add = async (req, res, next) => {
   const html = compileTemplate(template, { user: contact })
 
   var mailOptions = {
-    from: 'sokurenko337@gmail.com',
+    from: 'profoundconf@gmail.com',
     to: newContact.email,
     subject: 'Profound',
     html: html

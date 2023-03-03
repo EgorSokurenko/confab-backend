@@ -1,16 +1,14 @@
 const express = require("express");
-const {
-  validateSchema,
-} = require("../../model/contacts/contact");
 const contacts = require("../../controllers/contacts");
-const { validation, token, ctrlWrapper } = require("../../middlewares");
+const {  token, ctrlWrapper } = require("../../middlewares");
 const router = express.Router();
 
 router.get("/", ctrlWrapper(contacts.getAll));
 
-router.get("/:contactId", ctrlWrapper(contacts.getById));
+router.get("/get/:contactId", ctrlWrapper(contacts.getById));
 
-router.get("/:contactId/admin", token,  ctrlWrapper(contacts.getAdminUsers));
+router.get("/admin", token,  ctrlWrapper(contacts.getAdminUsers));
+router.get("/admin/:contactId", token,  ctrlWrapper(contacts.getAdminUsers));
 
 router.post("/",  ctrlWrapper(contacts.add));
 
@@ -18,9 +16,9 @@ router.delete("/:contactId", ctrlWrapper(contacts.deleteById));
 
 router.get("/:contactId/pdf", ctrlWrapper(contacts.pdf))
 
-router.put(
+router.patch(
   "/:contactId",
-  validation(validateSchema),
+  token,
   ctrlWrapper(contacts.putById)
 );
 
