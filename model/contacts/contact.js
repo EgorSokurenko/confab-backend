@@ -35,6 +35,7 @@ const contactSchema = Schema({
   eatingDays:[String],
   arrived: Boolean,
   accepted: Boolean,
+  amount: Number,
   createdAt:{type:Date, default: Date.now}
 });
 const validateSchema = Joi.object({
@@ -53,7 +54,8 @@ const validateSchema = Joi.object({
   arrivalDay: Joi.string().required(),
   eatingDays: Joi.array(),
   arrived: Joi.boolean().optional().allow(null),
-  accepted: Joi.boolean().optional().allow(null)
+  accepted: Joi.boolean().optional().allow(null),
+  amount: Joi.string().required(),
 });
 const Contact = model("contact", contactSchema);
 module.exports = { Contact, validateSchema };
