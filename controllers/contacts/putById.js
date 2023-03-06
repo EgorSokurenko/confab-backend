@@ -10,8 +10,6 @@ const compileTemplate = function (templateData, variablesData) {
 const putById = async (req, res, next) => {
   const id = req.params.contactId;
 
-
-  console.log(req.body)
   if(req.body.accepted === true){
     const transporter = nodemailer.createTransport({
       service: 'gmail',
