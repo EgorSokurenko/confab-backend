@@ -14,6 +14,8 @@ router.post("/",  ctrlWrapper(contacts.add));
 
 router.delete("/:contactId", ctrlWrapper(contacts.deleteById));
 
+router.get("/count", ctrlWrapper(contacts.count))
+
 router.get("/:contactId/pdf", ctrlWrapper(contacts.pdf))
 
 router.patch(

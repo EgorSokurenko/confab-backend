@@ -1,14 +1,18 @@
 const { Contact } = require("../../model/contacts/contact");
+const Counter = require("../../model/contacts/counter");
 const nodemailer = require('nodemailer');
 const Path = require('path')
 const fs = require('fs')
-const getTemplate = template => fs.readFileSync(Path.resolve(__dirname, '../../templates/' + template), 'utf8')
-const compileTemplate = function (templateData, variablesData) {
-    const Handlebars = require('handlebars')
-    return Handlebars.compile(templateData)(variablesData)
-  }
 
 const add = async (req, res, next) => {
+  // if(req.body.stay.free && req.body.stay.need){
+  //   let counter = await Counter.findOneAndUpdate({name:'contacts'}, {$inc: {count: 1}}, {new:true})
+  //   if(!counter){
+  //     counter = await Counter.create({name:'contacts',count:1})
+  //   }
+
+  //   req.body.stay.count = counter.count
+  // }
   const newContact = await Contact.create(req.body);
   res.status(201).json({
     status: "succsess",

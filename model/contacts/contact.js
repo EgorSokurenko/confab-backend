@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
+const Counter = require('./counter')
 const contactSchema = Schema({
   name: {
     type: String,
@@ -28,10 +29,13 @@ const contactSchema = Schema({
   inst:{
     type: String,
   },
-  arrivalDay:{
-    type: String,
-    required: true,
+  stay:{
+    need: Boolean,
+    free: Boolean,
+    days: [String],
+    count: Number
   },
+  presenceDays:[String],
   eatingDays:[String],
   arrived: Boolean,
   accepted: Boolean,
@@ -51,11 +55,33 @@ const validateSchema = Joi.object({
   city: Joi.string().required(),
   church: Joi.string().required(),
   inst: Joi.string().optional().allow(''),
-  arrivalDay: Joi.string().required(),
+  presenceDays: Joi.array(),
   eatingDays: Joi.array(),
   arrived: Joi.boolean().optional().allow(null),
   accepted: Joi.boolean().optional().allow(null),
   amount: Joi.string().required(),
+  stay: Joi.object({
+    need: Joi.boolean().required(),
+    free: Joi.boolean().required(),
+    days: Joi.array(),
+    count: Joi.number().required()
+  })
 });
+
+
+contactSchema.pre('save', async function () {
+  var doc = this
+  if(doc.stay.free){
+    let counter = await Counter.findOneAndUpdate({name:'contacts'}, {$inc: {count: 1}}, {new:true})
+    if(!counter){
+      counter = await Counter.create({name:'contacts', count:1})
+    }
+
+    doc.stay.count = counter.count
+  }
+});
+
+
+
 const Contact = model("contact", contactSchema);
 module.exports = { Contact, validateSchema };
