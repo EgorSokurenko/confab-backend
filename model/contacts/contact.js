@@ -40,6 +40,7 @@ const contactSchema = Schema({
   arrived: Boolean,
   accepted: Boolean,
   amount: Number,
+  notShowMe: Boolean,
   createdAt:{type:Date, default: Date.now}
 });
 const validateSchema = Joi.object({
@@ -65,7 +66,8 @@ const validateSchema = Joi.object({
     free: Joi.boolean().required(),
     days: Joi.array(),
     count: Joi.number().required()
-  })
+  }),
+  notShowMe: Joi.boolean().optional(),
 });
 
 
