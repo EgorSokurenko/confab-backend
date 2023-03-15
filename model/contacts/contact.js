@@ -81,6 +81,13 @@ contactSchema.pre('save', async function () {
 
     doc.stay.count = counter.count
   }
+  
+});
+contactSchema.pre('deleteOne', async function () {
+  var doc = this
+  if(doc.stay.free){
+    await Counter.findOneAndUpdate({name:'contacts'}, {$inc: {count: -1}}, {new:true})
+  }
 });
 
 
