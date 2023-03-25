@@ -7,4 +7,5 @@ const { patchFavorite } = require("./patchFavorite");
 const { getAdminUsers } = require("./getAdminUsers")
 const { pdf } = require("./pdf")
 const { count } = require("./count")
-module.exports = { getAll, getById, add, deleteById, putById, patchFavorite, getAdminUsers, pdf, count};
+const { getForStay } = require("./getForStay")
+module.exports = { getAll, getById, add, deleteById, putById, patchFavorite, getAdminUsers, pdf, count, getForStay};

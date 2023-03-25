@@ -18,6 +18,8 @@ router.get("/count", ctrlWrapper(contacts.count))
 
 router.get("/:contactId/pdf", ctrlWrapper(contacts.pdf))
 
+router.get("/staying", ctrlWrapper(contacts.getForStay))
+
 router.patch(
   "/:contactId",
   token,

@@ -33,7 +33,13 @@ const contactSchema = Schema({
     need: Boolean,
     free: Boolean,
     days: [String],
-    count: Number
+    count: Number,
+    where:{
+      name: String,
+      phone: String,
+      address: String,
+      color: String
+    }
   },
   presenceDays:[String],
   eatingDays:[String],
@@ -65,7 +71,13 @@ const validateSchema = Joi.object({
     need: Joi.boolean().required(),
     free: Joi.boolean().required(),
     days: Joi.array(),
-    count: Joi.number().required()
+    count: Joi.number().required(),
+    where:Joi.object({
+      name: Joi.string().optional().allow(''),
+      phone: Joi.string().optional().allow(''),
+      address: Joi.string().optional().allow(''),
+      color: Joi.string().optional().allow(''),
+    })
   }),
   notShowMe: Joi.boolean().optional(),
 });
