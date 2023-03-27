@@ -3,7 +3,10 @@ const getAdminUsers = async (req, res, next) => {
     let currentContact = []
     if(req.params.contactId){
         await Contact.findOneAndUpdate({_id: req.params.contactId}, {$set:{arrived:true}});
-        currentContact = await Contact.find({_id: req.params.contactId});
+        currentContact = await Contact.find({_id: req.params.contactId}).lean();
+        if(currentContact[0]?.stay?.need){
+
+        }
     }
     const criteria = {
         _id:{$ne:req.params.contactId}

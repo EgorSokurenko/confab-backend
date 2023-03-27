@@ -26,7 +26,7 @@ const getForStay = async (req, res, next) => {
                users: { $push: "$$ROOT" }
             }
           }
-    ])
+    ]).sort({ _id: 1 })
     
     res.status(200).json({
         status: "succsess",
