@@ -57,6 +57,9 @@ const getAdminUsers = async (req, res, next) => {
     if(req.query.name){
         criteria['name'] = { $regex: req.query.name, $options: 'i' }
     }
+    if(req.query.church){
+      criteria['church'] = { $regex: req.query.church, $options: 'i' }
+    }
     if(req.query.eatingDays && req.query.eatingDays !== 'Голодний'){
       let eatArray = req.query.eatingDays.split(',')
       criteria = {
