@@ -48,7 +48,7 @@ const getAdminUsers = async (req, res, next) => {
               });
         }
     }
-    const criteria = {
+    let criteria = {
         _id:{$ne:req.params.contactId}
     }
     if(req.query.phone){
@@ -56,6 +56,15 @@ const getAdminUsers = async (req, res, next) => {
     }
     if(req.query.name){
         criteria['name'] = { $regex: req.query.name, $options: 'i' }
+    }
+    if(req.query.eatingDays && req.query.eatingDays !== 'Голодний'){
+      let eatArray = req.query.eatingDays.split(',')
+      criteria = {
+        ...criteria,
+        $and:[{eatingDays:{ $size:  eatArray.length}}, {eatingDays:{ $in:  eatArray}}]
+      }
+    }else if(req.query.eatingDays === 'Голодний'){
+      criteria['eatingDays'] = { $size:  0}
     }
     const result = await Contact.find(criteria).sort( { "createdAt": -1 } );
     res.status(200).json({

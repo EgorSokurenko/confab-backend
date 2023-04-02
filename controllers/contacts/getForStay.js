@@ -17,6 +17,11 @@ const getForStay = async (req, res, next) => {
     if(req.query.church){
         criteria.push({$match:{church: { $regex: req.query.church, $options: 'i' }}})
     }
+    if(req.query.free === 'true'){
+        criteria.push({$match:{'stay.free': true}})
+    }else{
+        criteria.push({$match:{'stay.free': false}})
+    }
     // const result = await Contact.find(criteria).sort( { "createdAt": -1 } );
     const result = await Contact.aggregate([
         ...criteria,
