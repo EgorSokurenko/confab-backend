@@ -52,11 +52,7 @@ const contactSchema = Schema({
 const validateSchema = Joi.object({
   name: Joi.string().min(3).max(30).required(),
   email: Joi.string()
-    .required()
-    .email({
-      minDomainSegments: 2,
-      tlds: { allow: ["com", "net", "uk", "org", "net", "ca"] },
-    }),
+    .required(),
   phone: Joi.string().required(),
   dob: Joi.string().required(),
   city: Joi.string().required(),

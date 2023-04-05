@@ -47,6 +47,12 @@ const getAdminUsers = async (req, res, next) => {
                 }
               });
         }
+        res.status(200).json({
+          status: "succsess",
+          code: 200,
+          data: { currentUser: currentContact },
+        });
+        return
     }
     let criteria = {
         _id:{$ne:req.params.contactId}
@@ -59,6 +65,12 @@ const getAdminUsers = async (req, res, next) => {
     }
     if(req.query.church){
       criteria['church'] = { $regex: req.query.church, $options: 'i' }
+    }
+    if(req.query.email){
+      criteria['email'] = { $regex: req.query.email, $options: 'i' }
+    }
+    if(req.query.arrived === 'true'){
+      criteria['arrived'] = true
     }
     if(req.query.eatingDays && req.query.eatingDays !== 'Голодний'){
       let eatArray = req.query.eatingDays.split(',')
